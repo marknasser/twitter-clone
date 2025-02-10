@@ -73,17 +73,17 @@ export const login = async (req, res) => {
     // searsh for a given username
     const currentUser = await User.findOne({ username });
     if (!currentUser) {
-      return res.status(400).send({ error: "username does not exist" });
+      return res.status(400).json({ error: "username does not exist" });
     }
 
-    //passwprd and copmapre
-    const isPasswordCrorrect = await bcrypt.compare(
+    // Compare the provided password with the stored hashed password
+    const isPasswordCorrect = await bcrypt.compare(
       password,
       currentUser.password
     );
 
-    if (!isPasswordCrorrect) {
-      return res.status(400).send({ error: "Invaild username or password" });
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ error: "Invaild username or password" });
     }
 
     generateTokenAndSetCookie(currentUser._id, res);
