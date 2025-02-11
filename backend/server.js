@@ -9,6 +9,7 @@ import { v2 as cloudinary } from "cloudinary";
 //Routers
 import authRouter from "./routs/auth.routes.js";
 import userRouter from "./routs/user.routes.js";
+import postRouter from "./routs/post.routes.js";
 
 dotenv.config(); //so the app can read .env file
 const app = express();
@@ -26,6 +27,7 @@ cloudinary.config({
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
 
 app.listen(PORT, () => {
   //connect to DB
