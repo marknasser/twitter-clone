@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
   const [comment, setComment] = useState("");
-  const postOwner = post.user;
+  const postOwner = post.owner;
   const isLiked = false;
 
   const isMyPost = true;
@@ -101,7 +101,7 @@ const Post = ({ post }) => {
                           <div className="w-8 rounded-full">
                             <img
                               src={
-                                comment.user.profileImg ||
+                                comment.commenter.profileImg ||
                                 "/avatar-placeholder.png"
                               }
                             />
@@ -110,10 +110,10 @@ const Post = ({ post }) => {
                         <div className="flex flex-col">
                           <div className="flex items-center gap-1">
                             <span className="font-bold">
-                              {comment.user.fullName}
+                              {comment.commenter.fullName}
                             </span>
                             <span className="text-gray-700 text-sm">
-                              @{comment.user.username}
+                              @{comment.commenter.username}
                             </span>
                           </div>
                           <div className="text-sm">{comment.text}</div>

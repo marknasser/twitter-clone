@@ -1,14 +1,17 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+
+// Pages
 import HomePage from "./pages/home/HomePage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import LoginPage from "./pages/auth/LoginPage";
+import NotificationPage from "./pages/notification/NotificationPage";
+
+//Components
 import Sidebar from "./components/common/Sidebar";
 import RightPanel from "./components/common/RightPanel";
-import NotificationPage from "./pages/notification/NotificationPage";
 import ProfilePage from "./pages/profile/ProfilePage";
-import { Toaster, toast } from "react-hot-toast";
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 
 function App() {
