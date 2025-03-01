@@ -15,7 +15,9 @@ import notificationRouter from "./routs/notification.routes.js";
 dotenv.config(); //so the app can read .env file
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.use(express.json()); //this middleware allows us to accept jason data in the req.body
+
+//limit should not be to big to prevent DOS
+app.use(express.json({ limit: "5mb" })); //this middleware allows us to accept jason data in the req.body
 app.use(express.urlencoded());
 app.use(cookieParser()); //to pars cookie object from body
 

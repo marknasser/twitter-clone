@@ -5,7 +5,7 @@ import User from "../models/user.model.js";
 import mongoose from "mongoose";
 
 export const createPost = async (req, res) => {
-  const { img, text } = req.body;
+  let { img, text } = req.body;
   const { currentUser } = req;
 
   try {
@@ -17,7 +17,6 @@ export const createPost = async (req, res) => {
       const uploadedResponse = await cloudinary.uploader.upload(img);
       img = uploadedResponse.secure_url;
     }
-
     const newPost = new Post({
       text,
       img,
