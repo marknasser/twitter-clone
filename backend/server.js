@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import { connectDB } from "./config/db.js";
 
@@ -15,6 +16,7 @@ import notificationRouter from "./routs/notification.routes.js";
 dotenv.config(); //so the app can read .env file
 const app = express();
 const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
 //limit should not be to big to prevent DOS
 app.use(express.json({ limit: "5mb" })); //this middleware allows us to accept jason data in the req.body
@@ -32,6 +34,14 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/notifications", notificationRouter);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   //connect to DB
