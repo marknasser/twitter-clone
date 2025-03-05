@@ -103,7 +103,7 @@ export const likeUnlikePost = async (req, res) => {
     if (isTheUserLikedThePost) {
       //Unlike
       thePost.likes.pull(currentUser._id);
-      currentUser.likedPosts.pull(thePost._d);
+      currentUser.likedPosts.pull(thePost._id);
     } else {
       //Like
       thePost.likes.push(currentUser._id);
@@ -119,9 +119,9 @@ export const likeUnlikePost = async (req, res) => {
     await currentUser.save();
     await thePost.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       message: isTheUserLikedThePost ? "Post unliked" : "Post liked",
-      data: thePost,
+      data: thePost.likes,
     });
   } catch (error) {
     console.log("Error in likeUnlikePost controller: ", error);
@@ -166,10 +166,10 @@ export const getLikedPosts = async (req, res) => {
       path: "likedPosts",
       select: "-password",
       populate: [
-        {
-          path: "likes",
-          select: "username fullName profileImg",
-        },
+        // {
+        //   path: "likes",
+        //   select: "username fullName profileImg",
+        // },
         {
           path: "owner",
           select: "username fullName profileImg",
@@ -182,6 +182,7 @@ export const getLikedPosts = async (req, res) => {
     });
 
     if (!user) return res.status(404).json({ error: "User not found" });
+    console.log("user", user);
 
     res.status(200).json(user.likedPosts);
   } catch (error) {
@@ -230,8 +231,7 @@ export const getUserPosts = async (req, res) => {
         path: "comments.commenter",
         select: "-password",
       });
-    console.log(user);
-    console.log(userPosts);
+
     res.status(200).json(userPosts);
   } catch (error) {
     console.log("Error in getUserPosts controller: ", error);

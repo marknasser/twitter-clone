@@ -43,7 +43,6 @@ function App() {
           throw new Error(data.error || "something went wrong");
         }
 
-        console.log("currentUser", data);
         return data;
       } catch (error) {
         throw new Error(error);
